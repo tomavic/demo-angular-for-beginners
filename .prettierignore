@@ -1,0 +1,18 @@
+# compiled output
+/dist
+
+# misc
+coverage
+deploy
+Deployment
+e2e
+node_modules
+package.json
+package-lock.json
+yarn.lock
+npm-debug.log
+yarn-error.log
+
+# System Files
+.DS_Store
+Thumbs.db
