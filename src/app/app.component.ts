@@ -11,8 +11,9 @@ import { debounceTime } from 'rxjs';
 })
 export class AppComponent implements OnInit {
   filteredList: Item[] = ITEMS_LIST_STATIC;
-
   searchInput = new FormControl();
+  isTableView = true;
+  allowedColumns = ALLOWED_COLUMNS;
 
   ngOnInit(): void {
     this.searchInput.valueChanges.pipe(debounceTime(300)).subscribe(searchInputValue => {
@@ -20,6 +21,10 @@ export class AppComponent implements OnInit {
         item.title.toLocaleLowerCase().includes(searchInputValue.toLocaleLowerCase())
       );
     });
+  }
+
+  toggleViews() {
+    this.isTableView = !this.isTableView;
   }
 }
 
@@ -101,3 +106,5 @@ export const ITEMS_LIST_STATIC = [
       'A suspension bridge in San Francisco, California. It is one of the most recognizable bridges in the world.'
   }
 ] satisfies Item[];
+
+export const ALLOWED_COLUMNS = ['Title', 'Subtitle', 'Image', 'Description'];

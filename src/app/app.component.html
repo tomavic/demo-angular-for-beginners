@@ -13,7 +13,7 @@
     </div>
 
     <!-- Filter -->
-    <div class="flex-col mb-20">
+    <div class="flex-col mb-10">
       <div class="relative">
         <input
           type="text"
@@ -24,8 +24,29 @@
       </div>
     </div>
 
+    <!-- Toggle Views -->
+    <div class="flex items-center justify-end gap-3 mb-5">
+      <p>Toggle Between Views</p>
+      <div class="flex m-2">
+        <button
+          (click)="toggleViews()"
+          [ngClass]="{ 'text-indigo-700 border-indigo-600 bg-indigo-100': !isTableView }"
+          class="flex justify-center px-4 py-2 text-base font-bold text-gray-700 transition duration-200 ease-in-out bg-gray-100 border border-gray-600 rounded rounded-r-none cursor-pointer focus:outline-none">
+          <div class="flex leading-5">List</div>
+        </button>
+        <button
+          (click)="toggleViews()"
+          [ngClass]="{ 'text-indigo-700 border-indigo-600 bg-indigo-100': isTableView }"
+          class="flex justify-center px-4 py-2 text-base font-bold text-gray-700 transition duration-200 ease-in-out bg-gray-100 border border-l-0 border-gray-600 rounded rounded-l-none cursor-pointer focus:outline-none">
+          <div class="flex leading-5">Table</div>
+        </button>
+      </div>
+    </div>
+
     <!-- Content: List of Cards -->
-    <div class="flex flex-wrap -m-4">
+    <div
+      *ngIf="!isTableView"
+      class="flex flex-wrap mb-20 -m-4">
       <div
         *ngFor="let item of filteredList"
         class="p-4 xl:w-1/4 md:w-1/2">
@@ -44,6 +65,54 @@
             {{ item.description }}
           </p>
         </div>
+      </div>
+    </div>
+
+    <!-- Content: Table -->
+    <div
+      *ngIf="isTableView"
+      class="relative flex flex-col w-full min-w-0 mb-20 break-words bg-white rounded shadow-lg">
+      <!-- Container div element to allow responsivness on Mobile/Desktop-->
+      <div class="block w-full overflow-x-auto">
+        <!-- Table -->
+        <table class="items-center w-full border border-collapse border-gray-200 table-auto">
+          <!-- Table Header -->
+          <thead>
+            <tr>
+              <th
+                scope="col"
+                *ngFor="let column of allowedColumns"
+                class="px-6 py-3 text-xs font-semibold uppercase align-middle border border-l-0 border-r-0 border-solid bg-blueGray-50 text-blueGray-500 border-blueGray-100 whitespace-nowrap">
+                {{ column }}
+              </th>
+            </tr>
+          </thead>
+
+          <!-- Table Body -->
+          <tbody>
+            <tr
+              *ngFor="let item of filteredList"
+              class="border-b border-gray-200 hover:bg-gray-100">
+              <th
+                scope="row"
+                class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                {{ item.title }}
+              </th>
+              <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                {{ item.subtitle }}
+              </td>
+              <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                <img
+                  src="https://dummyimage.com/100x100"
+                  class="w-10 h-10 rounded"
+                  alt="content" />
+              </td>
+              <td class="p-4 px-6 text-xs align-middle border-t-0 border-l-0 border-r-0 whitespace-nowrap">
+                {{ item.description }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
